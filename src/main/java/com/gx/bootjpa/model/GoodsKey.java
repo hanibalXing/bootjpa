@@ -16,19 +16,19 @@ import java.util.Objects;
  * @since
  */
 @Embeddable
-public class GoodsKey implements Serializable {
+public class GoodsKey<T> implements Serializable {
     @ManyToOne
     @JoinColumn(name = "store_id")
-    private ProductStore productStore;
+    private T t;
     @Column(name = "name")
     private String name;
 
-    public ProductStore getProductStore() {
-        return productStore;
+    public T getT() {
+        return t;
     }
 
-    public void setProductStore(ProductStore productStore) {
-        this.productStore = productStore;
+    public void setT(T t) {
+        this.t = t;
     }
 
     public String getName() {
@@ -43,15 +43,13 @@ public class GoodsKey implements Serializable {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        GoodsKey goodsKey = (GoodsKey) o;
-        return Objects.equals(productStore, goodsKey.productStore) &&
+        GoodsKey<?> goodsKey = (GoodsKey<?>) o;
+        return Objects.equals(t, goodsKey.t) &&
                 Objects.equals(name, goodsKey.name);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(productStore, name);
+        return Objects.hash(t, name);
     }
-
-
 }

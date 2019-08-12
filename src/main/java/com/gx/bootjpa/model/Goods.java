@@ -15,7 +15,7 @@ import java.io.Serializable;
 @Table(name = "goods")
 public class Goods implements Serializable {
     @EmbeddedId
-    private GoodsKey id;
+    private GoodsKey<ProductStore> id;
     @Column(name = "price")
     private Integer price;
 

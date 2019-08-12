@@ -35,7 +35,7 @@ public class TestController {
         productStore.getGoods().add(new Goods(){{
             setId(new GoodsKey(){{
                 setName("123");
-                setProductStore(productStore);
+                setT(productStore);
 
             }});
             setPrice(123);
@@ -58,10 +58,10 @@ public class TestController {
         store.getGoods().addAll(Arrays.asList(new Goods(){{
             setId(new GoodsKey(){{
                 setName("456");
-                setProductStore(store);
+                setT(store);
 
             }});
-            setPrice(125);
+            setPrice(123);
         }}));
         storeService.addStore(store);
     }

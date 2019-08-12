@@ -1,6 +1,7 @@
 package com.gx.bootjpa.model;
 
 import javax.persistence.*;
+import java.io.Serializable;
 
 /**
  * @author gx
@@ -12,39 +13,26 @@ import javax.persistence.*;
  */
 @Entity
 @Table(name = "goods")
-public class Goods {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id")
-    private Integer id;
-    @Column(name = "name")
-    private String name;
-    @ManyToOne
-    @JoinColumn(name = "store_id")
-    private ProductStore productStore;
+public class Goods implements Serializable {
+    @EmbeddedId
+    private GoodsKey id;
+    @Column(name = "price")
+    private Integer price;
 
-    public Integer getId() {
+    public GoodsKey getId() {
         return id;
     }
 
-    public void setId(Integer id) {
+    public void setId(GoodsKey id) {
         this.id = id;
     }
 
-    public String getName() {
-        return name;
+    public Integer getPrice() {
+        return price;
     }
 
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public ProductStore getProductStore() {
-        return productStore;
-    }
-
-    public void setProductStore(ProductStore productStore) {
-        this.productStore = productStore;
+    public void setPrice(Integer price) {
+        this.price = price;
     }
 
 }

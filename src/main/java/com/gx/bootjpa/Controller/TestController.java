@@ -1,6 +1,7 @@
 package com.gx.bootjpa.Controller;
 
 import com.gx.bootjpa.model.Goods;
+import com.gx.bootjpa.model.GoodsKey;
 import com.gx.bootjpa.model.ProductStore;
 import com.gx.bootjpa.service.StoreService;
 import org.apache.catalina.Store;
@@ -32,8 +33,12 @@ public class TestController {
         p.setName("123");
         ProductStore productStore = storeService.addStore(p);
         productStore.getGoods().add(new Goods(){{
-            setName("123");
-            setProductStore(productStore);
+            setId(new GoodsKey(){{
+                setName("123");
+                setProductStore(productStore);
+
+            }});
+            setPrice(123);
         }});
 
         storeService.addStore(p);
@@ -51,8 +56,12 @@ public class TestController {
         ProductStore store = storeService.findStore(id);
         store.getGoods().clear();
         store.getGoods().addAll(Arrays.asList(new Goods(){{
-            setName("new");
-            setProductStore(store);
+            setId(new GoodsKey(){{
+                setName("456");
+                setProductStore(store);
+
+            }});
+            setPrice(125);
         }}));
         storeService.addStore(store);
     }

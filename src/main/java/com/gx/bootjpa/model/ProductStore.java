@@ -24,7 +24,7 @@ public class ProductStore {
     @Column(name = "id")
     private Integer id;
 
-    @OneToMany(mappedBy = "productStore", cascade = CascadeType.ALL,orphanRemoval = true)
+    @OneToMany(mappedBy = "id.productStore", cascade = CascadeType.ALL)
     private Set<Goods> goods=new HashSet<>();
 
     @Column(name = "name")

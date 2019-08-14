@@ -3,6 +3,7 @@ package com.gx.bootjpa.Controller;
 import com.gx.bootjpa.model.Goods;
 import com.gx.bootjpa.model.GoodsKey;
 import com.gx.bootjpa.model.ProductStore;
+import com.gx.bootjpa.service.RedissonService;
 import com.gx.bootjpa.service.StoreService;
 import org.apache.catalina.Store;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,10 +27,12 @@ import static org.springframework.web.bind.annotation.RequestMethod.GET;
 public class TestController {
     @Autowired
     StoreService storeService;
+    @Autowired
+    private RedissonService redissonService;
     @RequestMapping(path = "/add", method = GET)
     public void test()
     {
-        ProductStore p=new ProductStore();
+        /*ProductStore p=new ProductStore();
         p.setName("123");
         ProductStore productStore = storeService.addStore(p);
         productStore.getGoods().add(new Goods(){{
@@ -41,7 +44,9 @@ public class TestController {
             setPrice(123);
         }});
 
-        storeService.addStore(p);
+        storeService.addStore(p);*/
+        Object gx = redissonService.getRMap("123").addAndGet("gx", 0.5);
+
     }
 
     @RequestMapping(path = "/del/{id}", method = GET)

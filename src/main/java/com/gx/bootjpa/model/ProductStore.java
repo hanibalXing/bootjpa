@@ -30,6 +30,10 @@ public class ProductStore {
     @Column(name = "name")
     private String name;
 
+    @Enumerated
+    @Column(name = "action")
+    private EnumAction action;
+
     public Integer getId() {
         return id;
     }
@@ -52,6 +56,14 @@ public class ProductStore {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public EnumAction getAction() {
+        return action;
+    }
+
+    public void setAction(EnumAction action) {
+        this.action = action;
     }
 }
 

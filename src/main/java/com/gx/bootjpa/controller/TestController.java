@@ -1,11 +1,10 @@
-package com.gx.bootjpa.Controller;
+package com.gx.bootjpa.controller;
 
 import com.gx.bootjpa.model.Goods;
 import com.gx.bootjpa.model.GoodsKey;
 import com.gx.bootjpa.model.ProductStore;
 import com.gx.bootjpa.service.RedissonService;
 import com.gx.bootjpa.service.StoreService;
-import org.apache.catalina.Store;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -29,8 +28,8 @@ public class TestController {
     StoreService storeService;
     @Autowired
     private RedissonService redissonService;
-    @RequestMapping(path = "/add", method = GET)
-    public void test()
+    @RequestMapping(path = "/add/{id}", method = GET)
+    public void add(@PathVariable Integer id)
     {
         /*ProductStore p=new ProductStore();
         p.setName("123");
@@ -45,8 +44,9 @@ public class TestController {
         }});
 
         storeService.addStore(p);*/
-        Object gx = redissonService.getRMap("123").addAndGet("gx", 0.5);
-
+       // Object gx = redissonService.getRMap("123").addAndGet("gx", 0.5);
+        ProductStore store = storeService.findStore(id);
+        store.getAction().p("gx");
     }
 
     @RequestMapping(path = "/del/{id}", method = GET)

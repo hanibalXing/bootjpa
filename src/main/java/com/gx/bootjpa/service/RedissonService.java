@@ -54,6 +54,11 @@ public class RedissonService {
         return sortedSet;
     }
 
+    public <V> RBloomFilter<V> getRBloomFilter(String objectName) {
+        RBloomFilter<V> filter = redissonClient.getBloomFilter(objectName);
+        return filter;
+    }
+
     /**
      * 获取集合
      *

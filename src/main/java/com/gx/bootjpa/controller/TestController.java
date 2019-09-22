@@ -5,6 +5,7 @@ import com.gx.bootjpa.model.GoodsKey;
 import com.gx.bootjpa.model.ProductStore;
 import com.gx.bootjpa.service.RedissonService;
 import com.gx.bootjpa.service.StoreService;
+import org.redisson.api.RBloomFilter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -43,10 +44,19 @@ public class TestController {
             setPrice(123);
         }});
 
-        storeService.addStore(p);*/
+        storeService.addStore(p);
+
+           ProductStore store = storeService.findStore(id);
+        store.getAction().p("gx");*/
        // Object gx = redissonService.getRMap("123").addAndGet("gx", 0.5);
-        ProductStore store = storeService.findStore(id);
-        store.getAction().p("gx");
+        RBloomFilter<String> bloomFilter = redissonService.getRBloomFilter("sample");
+        bloomFilter.delete();
+        bloomFilter.tryInit(1000000L, 0.0001);
+        bloomFilter.add("123");
+        bloomFilter.add("456");
+        boolean contains = bloomFilter.contains("123");
+        System.out.println(contains);
+
     }
 
     @RequestMapping(path = "/del/{id}", method = GET)

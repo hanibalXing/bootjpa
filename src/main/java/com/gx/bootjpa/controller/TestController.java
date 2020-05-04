@@ -6,6 +6,7 @@ import com.gx.bootjpa.model.GoodsKey;
 import com.gx.bootjpa.model.ProductStore;
 import com.gx.bootjpa.service.RedissonService;
 import com.gx.bootjpa.service.StoreService;
+import com.gx.bootjpa.service.TaskService;
 import org.redisson.api.RBloomFilter;
 import org.redisson.api.RLock;
 import org.redisson.api.RedissonClient;
@@ -36,6 +37,8 @@ public class TestController {
     private RedissonService redissonService;
     @Autowired
     private RedissonClient redissonClient;
+    @Autowired
+    TaskService taskService;
     @RequestMapping(path = "/add/{id}", method = GET)
     public void add(@PathVariable Integer id)
     {
@@ -63,7 +66,7 @@ public class TestController {
         bloomFilter.add("456");
         boolean contains = bloomFilter.contains("123");
         System.out.println(contains);*/
-        try(Locked locked= new Locked("gxx", Locked.LockType.eWrite,redissonClient)) {
+       /* try(Locked locked= new Locked("gxx", Locked.LockType.eWrite,redissonClient)) {
             System.out.println("1");
             TimeUnit.SECONDS.sleep(10);
             try(Locked locked1= new Locked("gxx", Locked.LockType.eWrite,redissonClient)) {
@@ -74,8 +77,9 @@ public class TestController {
             }
         } catch (IOException |InterruptedException e) {
             throw new RuntimeException(e);
-        }
+        }*/
 
+        taskService.start(String.valueOf(id));
 
     }
 

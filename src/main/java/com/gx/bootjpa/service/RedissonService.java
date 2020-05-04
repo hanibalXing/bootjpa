@@ -160,14 +160,14 @@ public class RedissonService {
         return rCountDownLatch;
     }
 
-    /**
+   /* *//**
      * 获取消息的Topic
      *
      * @param objectName
      * @return
-     */
+     *//*
     public <M> RTopic<M> getRTopic(String objectName) {
         RTopic<M> rTopic = redissonClient.getTopic(objectName);
         return rTopic;
-    }
+    }*/
 }

@@ -10,7 +10,25 @@ public class CallTaskExecutionState {
     private String id;
     private ExecutionStage executionStage=ExecutionStage.INITIAL;
     private String executingDialerId;
+    private CallTaskState callTaskState=CallTaskState.NOT_START;
 
+    public CallTaskState getCallTaskState() {
+        return callTaskState;
+    }
+
+    public void setCallTaskState(CallTaskState callTaskState) {
+        this.callTaskState = callTaskState;
+    }
+
+    @Override
+    public String toString() {
+        return "CallTaskExecutionState{" +
+                "id='" + id + '\'' +
+                '}';
+    }
+    private CallTaskExecutionState(){
+
+    }
     public CallTaskExecutionState(String id) {
         this.id = id;
     }

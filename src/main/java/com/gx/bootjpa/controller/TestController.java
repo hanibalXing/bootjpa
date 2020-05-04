@@ -86,7 +86,8 @@ public class TestController {
     @RequestMapping(path = "/del/{id}", method = GET)
     public void test(@PathVariable Integer id)
     {
-       storeService.deleteStore(id);
+        taskService.pause(String.valueOf(id));
+       //storeService.deleteStore(id);
     }
 
     @RequestMapping(path = "/up/{id}", method = GET)

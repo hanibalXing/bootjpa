@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.io.IOException;
+import java.util.Optional;
 import java.util.function.Consumer;
 import java.util.function.Function;
 
@@ -35,6 +36,16 @@ public class RedisCallTaskStatesTable implements CallTaskStatesTable {
                 map.put(id,newState);
             }
         }catch (IOException e){
+            throw new RuntimeException(e);
+        }
+    }
+
+    @Override
+    public Optional<CallTaskExecutionState> getTaskState(String id) {
+        try(Locked locked=new Locked("callTaskWithState"+"_"+id, Locked.LockType.eReed,redissonClient)) {
+            RMap<String,CallTaskExecutionState> map=redissonClient.getMap("callTaskWithState");
+            return Optional.ofNullable(map.get(id));
+        } catch (IOException e) {
             throw new RuntimeException(e);
         }
     }

@@ -1,7 +1,9 @@
 package com.gx.bootjpa.service.impl;
 
 import com.gx.bootjpa.model.CallTaskExecutionState;
+import com.gx.bootjpa.model.CallTaskState;
 import com.gx.bootjpa.service.CallTaskExecutionFactory;
+import com.gx.bootjpa.service.CallTaskStateUpdater;
 import com.gx.bootjpa.service.CallTaskStatesTable;
 import com.gx.bootjpa.service.TaskService;
 import com.gx.bootjpa.thread.TaskThread;
@@ -22,6 +24,8 @@ public class TaskServiceImpl implements TaskService {
     private final ExecutorService callTaskExecutorPoll= Executors.newCachedThreadPool();
     @Autowired
     CallTaskStatesTable callTaskStatesTable;
+    @Autowired
+    CallTaskStateUpdater callTaskStateUpdater;
     @Autowired
     CallTaskExecutionFactory callTaskExecutionFactory;
     static class CallTaskExecFuture {
@@ -85,7 +89,7 @@ public class TaskServiceImpl implements TaskService {
             }
             return taskFuture;
         });
-
+        callTaskStateUpdater.updateCallTaskState(callTaskId, CallTaskState.PAUSED);
         callTaskExcutions.remove(callTaskId);
     }
 }

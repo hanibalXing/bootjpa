@@ -21,6 +21,11 @@ public class RedissonService {
         System.out.println(config.toJSON().toString());
     }
 
+    public enum LockType {
+     eReed,
+     eWrite
+    }
+
     /**`
      * 获取字符串对象
      *
@@ -121,8 +126,15 @@ public class RedissonService {
      * @param objectName
      * @return
      */
-    public RReadWriteLock getRWLock(String objectName) {
-        RReadWriteLock rwlock = redissonClient.getReadWriteLock(objectName);
+    public RLock getRWLock(String objectName,LockType type) {
+        RLock rwlock;
+        switch (type) {
+            case eWrite:
+                rwlock=redissonClient.getReadWriteLock(objectName).writeLock();
+                break;
+            default:
+                rwlock=redissonClient.getReadWriteLock(objectName).readLock();
+        }
         return rwlock;
     }
 

@@ -1,12 +1,8 @@
 package com.gx.bootjpa.controller;
 
 import com.gx.bootjpa.Locked;
-import com.gx.bootjpa.model.Goods;
-import com.gx.bootjpa.model.GoodsKey;
-import com.gx.bootjpa.model.ProductStore;
-import com.gx.bootjpa.service.RedissonService;
-import com.gx.bootjpa.service.StoreService;
-import com.gx.bootjpa.service.TaskService;
+import com.gx.bootjpa.model.*;
+import com.gx.bootjpa.service.*;
 import org.redisson.api.RBloomFilter;
 import org.redisson.api.RLock;
 import org.redisson.api.RedissonClient;
@@ -17,6 +13,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import java.io.IOException;
 import java.util.Arrays;
+import java.util.List;
 import java.util.concurrent.TimeUnit;
 
 import static org.springframework.web.bind.annotation.RequestMethod.GET;
@@ -39,6 +36,11 @@ public class TestController {
     private RedissonClient redissonClient;
     @Autowired
     TaskService taskService;
+    @Autowired
+    RoleService roleService;
+    @Autowired
+    StudentService studentService;
+
     @RequestMapping(path = "/add/{id}", method = GET)
     public void add(@PathVariable Integer id)
     {
@@ -83,6 +85,11 @@ public class TestController {
 
     }
 
+    @RequestMapping(path = "/in/{id}", method = GET)
+    public void in(@PathVariable Integer id)
+    {
+        List<Student> permissionByNames = studentService.getStudentByClassNames(Arrays.asList("xxx", null));
+    }
     @RequestMapping(path = "/del/{id}", method = GET)
     public void test(@PathVariable Integer id)
     {
@@ -106,5 +113,20 @@ public class TestController {
         storeService.addStore(store);
     }
 
+    @RequestMapping(path = "/redissonconfig", method = GET)
+    public void redissonConfig()
+    {
+        try {
+            redissonService.getRedissonClient();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    @RequestMapping(path = "/redissonadd", method = GET)
+    public void redissonAdd()
+    {
+            redissonService.getRMap("gx").put(123,123);
+    }
 
 }

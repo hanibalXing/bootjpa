@@ -1,5 +1,7 @@
 package com.gx.bootjpa.service;
 
+import com.gx.bootjpa.model.Permission;
+
 import java.util.List;
 
 /**
@@ -12,4 +14,5 @@ import java.util.List;
  */
 public interface RoleService {
     void saveRolePermissions(Long roleId, List<Long> permissionIds);
+    List<Permission> getPermissionByNames(List<String> names);
 }

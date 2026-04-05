@@ -39,4 +39,10 @@ public class RoleServiceImpl implements RoleService {
         role.setPermissions(pList);
         roleRepository.saveAndFlush(role);
     }
+
+    @Transactional
+    @Override
+    public List<Permission> getPermissionByNames(List<String> names) {
+       return permissionRepository.getPermissionByNames(names);
+    }
 }

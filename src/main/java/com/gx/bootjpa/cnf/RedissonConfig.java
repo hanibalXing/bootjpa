@@ -33,7 +33,8 @@ import org.springframework.context.annotation.Configuration;
         public RedissonClient getRedisson(){
 
             Config config = new Config();
-            config.useSingleServer().setAddress("redis://" + host + ":" + port);
+            config.useSingleServer().setAddress("redis://" + host + ":" + port)
+            .setPingConnectionInterval(10000);
             //添加主从配置
 //        config.useMasterSlaveServers().setMasterAddress("").setPassword("").addSlaveAddress(new String[]{"",""});
 
